@@ -2,14 +2,14 @@ from math import trunc
 
 class Solution:
     def myAtoi(self, s: str) -> int:
-        if s == "":
-            return 0
-
-        s = s.strip(" ")
-
         index = 0
         signed = 1
         new_s = ""
+
+        if s == "":
+            return 0
+        
+        s = s.strip(" ")
 
         if s[0] == "-":
             signed = -1
@@ -24,7 +24,8 @@ class Solution:
                 return 0
 
             if s[index].isnumeric():
-                if s[index] == "0":
+                if s[index] == "0" and new_s == "":
+                    index += 1
                     continue
                 new_s += s[index]
                 index += 1
@@ -35,10 +36,15 @@ class Solution:
             else:   # non numeric
                 break
 
+        if new_s == "":
+            return 0
+
         new_s = int(new_s)
 
-        if new_s > (2 ** 31):
-            new_s = 2 ** 31
+        if new_s > 2147483647:
+            if signed == -1:
+                return -2147483648
+            return 2147483647
 
         return new_s * signed
         # for i in range(len(s)):
@@ -69,7 +75,7 @@ class Solution:
 
 
 def main():
-    s = "   -42"
+    s = "00000-42a1234" # "   -42"
     # print("LEN", len(s))
     sol = Solution()
     print(sol.myAtoi(s))
