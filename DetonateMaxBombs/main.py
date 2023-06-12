@@ -1,30 +1,25 @@
 class Solution:
     def maximumDetonation(self, bombs: list[list[int]]) -> int:
-        bombsRange = range(len(bombs))
-        maxBombs = 0
+        graph = {}
+        n, max_bombs = len(bombs), 0
 
-        
-        for firstBombIdx in bombsRange:
-            stack = []
-            x1, y1, r1 = bombs[firstBombIdx]
-
-            for secondBombIdx in bombsRange:
-                if firstBombIdx == secondBombIdx:
+        for i in range(n):
+            for j in range(n):
+                if i == j:
                     continue
+                if bombs[i][2] ** 2 >= (bombs[i][0] - bombs[j][0]) ** 2 + (bombs[i][1] - bombs[j][1]) ** 2:
+                    graph[i] += [j]
 
-                x2, y2, r2 = bombs[secondBombIdx]
-                dist = self.distBetween(x1, y2, x2, y2)
-                within = dist <= r1
+        def dfs(self, i, visited):
+            for parent in graph[i]:
+                for child in parent:
+                    pass
 
-                if within:
-                    stack.append(secondBombIdx)
+        for i in range(n):
+            visited = [i]
+            dfs(i, visited)
 
-    def distBetween(self, x1, y1, x2, y2):
-        den = (x2 - x1)
-        if den == 0:
-            return 0
-        return abs((y2 - y1)/den)
-    
+
 def main():
     bombs = [[2,1,3],[6,1,4]]
     sol = Solution()
