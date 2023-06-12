@@ -13,7 +13,6 @@ class Solution:
 
             except IndexError:
                 return totalStr
-                    
 
 if __name__ == "__main__":
     strs = ["f","flow","flight"]
