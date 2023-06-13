@@ -4,38 +4,32 @@ class Solution:
         solutionList: list[list[int]] = []
         numsLen = len(nums)
 
-        for i in range(numsLen):
+        for i in range(numsLen-2):
             iNum = nums[i]
-            left = 0
+            left = i + 1
             right = numsLen - 1
 
-            for _ in range(numsLen):
-                if (i>0 and nums[i-1]==nums[i]):
-                    continue
-                elif (left == right):
-                    break
+            while (left < right):
+                leftNum = nums[left]
+                rightNum = nums[right]
 
-                if left == i:
+                sum = leftNum + rightNum + iNum
+
+                if (sum < 0):
                     left += 1
-                    continue
-                elif right == i:
+                elif (sum > 0):
                     right -= 1
-                    continue
-
-                total = nums[left] + nums[right] + iNum
-
-                if (total < 0):
-                    left += 1
-                elif (total > 0):
-                    right -= 1
-                elif (total == 0):
-                    sol = [nums[left], nums[right], iNum]
-                    sol.sort()
-                    if (sol not in solutionList):
-                        solutionList.append(sol)
+                else:
+                    if (i != 0 and nums[i]==nums[i-1]):
                         left += 1
                         right -= 1
-                        break
+                        continue
+                    elif ((left!=i+1 and right != numsLen-1) and (nums[left]==nums[left-1] and nums[right]==nums[right+1])):
+                        left += 1
+                        right -= 1
+                        continue
+                    solutionList.append([iNum, leftNum, rightNum])
+                    left += 1
                     right -= 1
 
         return solutionList
@@ -43,6 +37,8 @@ class Solution:
 
 if __name__ == "__main__":
     sol = Solution()
+    nums = [-2,0,0,2,2]
+    print(sol.threeSum(nums))
     nums = [-1,0,1,2,-1,-4]
     print(sol.threeSum(nums))
     nums = [-1,0,1,2,-1,-4,-2,-3,3,0,4]
