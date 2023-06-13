@@ -8,12 +8,13 @@ class Solution:
             iNum = nums[i]
             left = 0
             right = numsLen - 1
+
             for _ in range(numsLen):
                 if (i>0 and nums[i-1]==nums[i]):
                     continue
                 elif (left == right):
                     break
-                
+
                 if left == i:
                     left += 1
                     continue
@@ -32,6 +33,8 @@ class Solution:
                     sol.sort()
                     if (sol not in solutionList):
                         solutionList.append(sol)
+                        left += 1
+                        right -= 1
                         break
                     right -= 1
 
